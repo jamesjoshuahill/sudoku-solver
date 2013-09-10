@@ -1,3 +1,5 @@
+require 'cell'
+
 class Grid
   attr_reader :cells
 
@@ -14,10 +16,10 @@ class Grid
         cells[cell_name] = numbers.shift
       end
     end
-    cells
+    cells.each { |name, value| cells[name] = Cell.new(value, :neighbours) }
   end
 
   def solved?
-    !@cells.has_value? 0
+    @cells.values.map(&:filled_out?).all?
   end
 end
