@@ -54,6 +54,7 @@ describe Cell do
       cell.solve
       expect(cell.value).to eq 5
 
+      cell = Cell.new(0)
       expect(cell).to receive(:possible_values).twice.and_return [3]
       cell.solve
       expect(cell.value).to eq 3
@@ -63,6 +64,15 @@ describe Cell do
       expect(cell).to receive(:possible_values).and_return [1, 2, 3]
       cell.solve
       expect(cell).not_to be_filled_out
+    end
+  end
+
+  context 'when it has been filled out' do
+    it 'should not solve itself' do
+      cell = Cell.new(5)
+      cell.add_neighbours([1, 2, 3, 4, 5, 6, 7, 8])
+      cell.solve
+      expect(cell.value).to eq 5
     end
   end
 end

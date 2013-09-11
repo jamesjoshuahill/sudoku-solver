@@ -23,6 +23,8 @@ class Cell
   end
 
   def solve
-    @value = possible_values.first if possible_values.count == 1
+    if not filled_out?
+      @value = possible_values.first if possible_values.count == 1
+    end
   end
 end
