@@ -11,11 +11,11 @@ class Cell
   end
 
   def add_neighbours(neighbours)
-    @neighbours.concat(neighbours) if @neighbours.count < 28
+    @neighbours.concat(neighbours)
   end
 
   def values_of_neighbours
-    @neighbours.map(&:value) if @neighbours.count == 28
+    @neighbours.map(&:value)
   end
 
   def possible_values

@@ -23,48 +23,21 @@ describe Cell do
     expect(cell.neighbours).to be_empty
   end
 
-  context 'before all 28 neighbours have been added' do
-    it 'should add neighbours' do
-      neighbour = Cell.new(1)
-      cell.add_neighbours([neighbour])
-      expect(cell.neighbours).to include neighbour
-    end
-
-    it 'should not add more than 28 neighbours' do
-      neighbour = Cell.new(1)
-      other_neighbour = Cell.new(2)
-      28.times { cell.add_neighbours([neighbour]) }
-      cell.add_neighbours([other_neighbour])
-      expect(cell.neighbours).not_to include other_neighbour
-    end
-
-    it 'should not know the value of it\'s neighbours' do
-      expect(cell.values_of_neighbours).to be_nil
-      cell.add_neighbours([Cell.new(2)])
-      expect(cell.values_of_neighbours).to be_nil
-    end
+  it 'should add neighbours' do
+    neighbour = Cell.new(1)
+    cell.add_neighbours([neighbour])
+    expect(cell.neighbours).to include neighbour
   end
 
-  context 'when 28 neighbours have been added' do
-    before(:each) do
-      neighbour = Cell.new(1)
-      neighbours = [neighbour] * 28
-      cell.add_neighbours(neighbours)
-    end
+  it 'should know the values of it\'s neighbours' do
+    neighbours = [Cell.new(1)] * 24
+    cell.add_neighbours(neighbours)
+    expect(cell.values_of_neighbours).to eq([1] * 24)
 
-    it 'should have 28 neighbours' do
-      expect(cell.neighbours.count).to eq 28
-    end
-
-    it 'should know the values of it\'s neighbours' do
-      expect(cell.values_of_neighbours).to eq([1] * 28)
-
-      neighbour = Cell.new(5)
-      neighbours = [neighbour] * 28
-      cell = Cell.new(0)
-      cell.add_neighbours(neighbours)
-      expect(cell.values_of_neighbours).to eq([5] * 28)
-    end
+    cell = Cell.new(0)
+    neighbours = [Cell.new(5)] * 24
+    cell.add_neighbours(neighbours)
+    expect(cell.values_of_neighbours).to eq([5] * 24)
   end
 
   context 'when it has not been filled out' do
