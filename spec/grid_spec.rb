@@ -17,6 +17,11 @@ describe Grid do
     expect(grid.cells[0][2].value).to eq 5
   end
 
+  it 'should display the grid' do
+    expect(grid.inspect).to be_a String
+    expect(grid.inspect).not_to include '#<Cell:'
+  end
+
   # Integration test relying on Cell!
   it 'should tell a row of cells they are neighbours' do
     grid.make_neighbours_in_row(0)

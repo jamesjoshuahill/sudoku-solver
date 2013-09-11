@@ -21,7 +21,7 @@ class Grid
   end
 
   def cells_solved
-    @cells.flatten.map(&:filled_out?).count { |filled_out| filled_out == true }
+    @cells.flatten.select(&:filled_out?).count
   end
 
   def solved?
@@ -33,7 +33,10 @@ class Grid
     
     grid_changed_in_last_loop = true
     while !solved? && grid_changed_in_last_loop
+      puts inspect
+      puts "Solved? #{solved?}    :    Cells solved #{cells_solved}"
       grid_changed_in_last_loop = number_of_cells_changed { solve_2d(@cells) }
+      puts "Solved? #{solved?}    :    Cells solved #{cells_solved}"
     end
   end
 
@@ -43,7 +46,7 @@ class Grid
     yield
 
     cells_solved_after = cells_solved
-    cells_solved_before != cells_solved_after
+    cells_solved_before < cells_solved_after
   end
 
   def solve_2d(cells)
@@ -83,5 +86,18 @@ class Grid
     row = box_corners[box][0]
     column = box_corners[box][1]
     [@cells[row][column, 3], @cells[row+1][column, 3], @cells[row+2][column, 3]].flatten
+  end
+
+  def inspect
+    grid_as_string = ('-' * 37) + "\n"
+    @cells.each do |row|
+      row_as_string = "|"
+      row.each do |cell|
+        row_as_string += " #{cell.value} |"
+      end
+      grid_as_string += row_as_string + "\n"
+      grid_as_string += ('-' * 37) + "\n"
+    end
+    grid_as_string
   end
 end
