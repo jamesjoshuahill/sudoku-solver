@@ -16,7 +16,7 @@ class Grid
         cells[cell_name] = numbers.shift
       end
     end
-    cells.each { |name, value| cells[name] = Cell.new(value, :neighbours) }
+    cells.each { |name, value| cells[name] = Cell.new(value) }
   end
 
   def solved?
