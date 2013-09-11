@@ -20,26 +20,61 @@ class Grid
     cells
   end
 
+  def cells_solved
+    @cells.flatten.map(&:filled_out?).count { |filled_out| filled_out == true }
+  end
+
   def solved?
     @cells.flatten.map(&:filled_out?).all?
   end
 
+  def solve
+    make_all_neighbours
+    
+    grid_changed_in_last_loop = true
+    while !solved? && grid_changed_in_last_loop
+      grid_changed_in_last_loop = number_of_cells_changed { solve_2d(@cells) }
+    end
+  end
+
+  def number_of_cells_changed
+    cells_solved_before = cells_solved
+    
+    yield
+
+    cells_solved_after = cells_solved
+    cells_solved_before != cells_solved_after
+  end
+
+  def solve_2d(cells)
+    # Ask every cell to solve itself
+    cells.flatten.each { |cell| cell.solve }
+  end
+
   def make_neighbours_in_row(row)
-    make_neighbours(@cells[row])
+    make_cells_neighbours(@cells[row])
   end
 
   def make_neighbours_in_column(column)
-    make_neighbours(@cells.transpose[column])
+    make_cells_neighbours(@cells.transpose[column])
   end
 
   def make_neighbours_in_box(box)
-    make_neighbours(members_of(box))
+    make_cells_neighbours(members_of(box))
   end
 
-  def make_neighbours(cells)
+  def make_cells_neighbours(cells)
     cells.each do |cell|
       neighbours = cells - [cell]
       cell.add_neighbours(neighbours)
+    end
+  end
+
+  def make_all_neighbours
+    (0..8).each do |x|
+      make_neighbours_in_row(x)
+      make_neighbours_in_column(x)
+      make_neighbours_in_box(x)
     end
   end
 

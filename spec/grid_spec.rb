@@ -38,12 +38,24 @@ describe Grid do
     expect(grid.cells[4][4].neighbours.count).to eq 8
   end
 
+  it 'should tell every cell in the grid it\'s neighbours' do
+    grid.make_all_neighbours
+    expect(grid.cells[0][0].neighbours.count).to eq 24
+    expect(grid.cells[4][4].neighbours.count).to eq 24
+    expect(grid.cells[8][8].neighbours.count).to eq 24
+  end
+
   it 'should know it has not been solved' do
     expect(grid).not_to be_solved
   end
 
   it 'should know if it has been solved' do
     grid = Grid.new('1' * 81)
+    expect(grid).to be_solved
+  end
+
+  it 'should solve easy puzzles' do
+    grid.solve
     expect(grid).to be_solved
   end
 end
