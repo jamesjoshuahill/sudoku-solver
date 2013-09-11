@@ -4,18 +4,38 @@ describe Grid do
   let(:puzzle) { '015003002000100906270068430490002017501040380003905000900081040860070025037204600' }
   let(:grid) { Grid.new(puzzle) }
 
-  it 'should have 81 cells' do
-    expect(grid.cells.length).to eq 81
+  it 'should have 9 rows' do
+    expect(grid.cells.length).to eq 9
   end
 
-  it 'should name each cell' do
-    expect(grid.cells[:C1R1].value).to eq 0
-    expect(grid.cells[:C3R1].value).to eq 5
+  it 'should have 9 columns' do
+    expect(grid.cells.transpose.length).to eq 9
   end
 
-  xit 'should know which cells are in the same row of a puzzle' do
-    expect(grid.row(1, puzzle)).to eq [0, 1, 5, 0, 0, 3, 0, 0, 2]
-    expect(grid.row(2, puzzle)).to eq [0, 0, 0, 1, 0, 0, 9, 0, 6]
+  it 'should create a grid of cells from a puzzle' do
+    expect(grid.cells[0][0].value).to eq 0
+    expect(grid.cells[0][2].value).to eq 5
+  end
+
+  # Integration test relying on Cell!
+  it 'should tell a row of cells they are neighbours' do
+    grid.make_neighbours_in_row(0)
+    expect(grid.cells[0][0].neighbours.count).to eq 8
+  end
+
+  # Integration test relying on Cell!
+  it 'should tell a column of cells they are neighbours' do
+    grid.make_neighbours_in_column(0)
+    expect(grid.cells[0][0].neighbours.count).to eq 8
+  end
+
+  # Integration test relying on Cell!
+  it 'should tell a box of cells they are neighbours' do
+    grid.make_neighbours_in_box(0)
+    expect(grid.cells[0][0].neighbours.count).to eq 8
+
+    grid.make_neighbours_in_box(4)
+    expect(grid.cells[4][4].neighbours.count).to eq 8
   end
 
   it 'should know it has not been solved' do
