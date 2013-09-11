@@ -1,21 +1,21 @@
 class Cell
-  attr_reader :value
+  attr_reader :value, :neighbours
 
-  def initialize(value, neighbours)
+  def initialize(value)
     @value = value
-    @neighbours = neighbours
+    @neighbours = []
   end
 
   def filled_out?
     @value != 0
   end
 
-  def neighbours
-    @neighbours
+  def add_neighbours(neighbour)
+    @neighbours.concat neighbour if @neighbours.count < 28
   end
 
   def values_of_neighbours
-    @neighbours.map(&:value)
+    @neighbours.map(&:value) if @neighbours.count == 28
   end
 
   def possible_values
