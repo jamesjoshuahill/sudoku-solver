@@ -10,8 +10,8 @@ class Cell
     @value != 0
   end
 
-  def add_neighbours(neighbour)
-    @neighbours.concat neighbour if @neighbours.count < 28
+  def add_neighbours(neighbours)
+    @neighbours.concat(neighbours) if @neighbours.count < 28
   end
 
   def values_of_neighbours
