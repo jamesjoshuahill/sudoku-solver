@@ -45,9 +45,9 @@ describe Grid do
 
   it 'should tell every cell in the grid it\'s neighbours' do
     grid.make_all_neighbours
-    expect(grid.cells[0][0].neighbours.count).to eq 24
-    expect(grid.cells[4][4].neighbours.count).to eq 24
-    expect(grid.cells[8][8].neighbours.count).to eq 24
+    expect(grid.cells[0][0].neighbours.count).to eq 20
+    expect(grid.cells[4][4].neighbours.count).to eq 20
+    expect(grid.cells[8][8].neighbours.count).to eq 20
   end
 
   it 'should know it has not been solved' do
