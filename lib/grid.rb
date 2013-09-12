@@ -7,17 +7,20 @@ class Grid
     @cells = create_cells_from(puzzle)
   end
 
+  def list_of_cells_from(string)
+    numbers = string.chars.map(&:to_i)
+    numbers.map! { |number| Cell.new(number) }
+  end
+
   def create_cells_from(puzzle)
-    numbers = puzzle.chars.map(&:to_i)
-    cells = []
-    (0..8).each do |row|
-      new_row = []
-      (0..8).each do |column|
-        new_row << Cell.new(numbers.shift)
-      end
-      cells << new_row
-    end
-    cells
+    cells = list_of_cells_from(puzzle)
+    grid_from(cells)
+  end
+
+  def grid_from(cells)
+    grid = []
+    cells.each_slice(9) { |nine_cells| grid << nine_cells }
+    grid
   end
 
   def cells_solved
@@ -50,7 +53,6 @@ class Grid
   end
 
   def solve_all_cells
-    # Ask every cell to solve itself
     @cells.flatten.each { |cell| cell.solve }
   end
 
@@ -82,19 +84,22 @@ class Grid
   end
 
   def members_of(box)
-    box_corners = [[0, 0], [0, 3], [0, 6], [3, 0], [3, 3], [3, 6], [6, 0], [6, 3], [6, 6]]
+    box_corners = [ [0, 0], [0, 3], [0, 6],
+                    [3, 0], [3, 3], [3, 6],
+                    [6, 0], [6, 3], [6, 6] ]
     row = box_corners[box][0]
     column = box_corners[box][1]
-    [@cells[row][column, 3], @cells[row+1][column, 3], @cells[row+2][column, 3]].flatten
+    [ @cells[row][column, 3],
+      @cells[row+1][column, 3],
+      @cells[row+2][column, 3] ].flatten
   end
 
   def inspect
-    grid_as_string = ('-' * 37) + "\n"
+    row_separator = ('-' * 37) + "\n"
+    grid_as_string = row_separator
     @cells.each do |row|
       row_as_string = "|"
-      row.each do |cell|
-        row_as_string += " #{cell.value} |"
-      end
+      row.each { |cell| row_as_string += " #{cell.value} |" }
       grid_as_string += row_as_string + "\n"
       grid_as_string += ('-' * 37) + "\n"
     end

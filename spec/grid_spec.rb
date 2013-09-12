@@ -20,6 +20,7 @@ describe Grid do
   it 'should display the grid' do
     expect(grid.inspect).to be_a String
     expect(grid.inspect).not_to include '#<Cell:'
+    puts grid.inspect
   end
 
   # Integration test relying on Cell!
