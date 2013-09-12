@@ -12,6 +12,8 @@ class Cell
 
   def add_neighbours(neighbours)
     @neighbours.concat(neighbours)
+    # Not tested
+    @neighbours.uniq!
   end
 
   def values_of_neighbours
