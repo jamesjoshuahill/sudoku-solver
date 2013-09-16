@@ -18,26 +18,30 @@ describe Cell do
     expect(cell).not_to be_filled_out
   end
 
-  it 'should start with no neighbours' do
-    cell = Cell.new(0)
-    expect(cell.neighbours).to be_empty
-  end
+  context 'can have neighbours and' do
+    it 'should start with none' do
+      cell = Cell.new(0)
+      expect(cell.neighbours).to be_empty
+    end
 
-  it 'should add neighbours' do
-    neighbour = Cell.new(1)
-    cell.add_neighbours([neighbour])
-    expect(cell.neighbours).to include neighbour
-  end
+    it 'should add neighbours' do
+      neighbour = Cell.new(1)
+      cell.add_neighbours([neighbour])
+      expect(cell.neighbours).to include neighbour
+    end
 
-  it 'should know the values of it\'s neighbours' do
-    neighbours = [Cell.new(1)] * 24
-    cell.add_neighbours(neighbours)
-    expect(cell.values_of_neighbours).to eq([1] * 24)
+    it 'should not add a neighbour twice' do
+      neighbour = double :Cell
+      neighbours = [neighbour, neighbour]
+      cell.add_neighbours(neighbours)
+      expect(cell.neighbours).to eq [neighbour]
+    end
 
-    cell = Cell.new(0)
-    neighbours = [Cell.new(5)] * 24
-    cell.add_neighbours(neighbours)
-    expect(cell.values_of_neighbours).to eq([5] * 24)
+    it 'should know the values of it\'s neighbours' do
+      neighbours = [Cell.new(1), Cell.new(5), Cell.new(10)]
+      cell.add_neighbours(neighbours)
+      expect(cell.values_of_neighbours).to eq [1, 5, 10]
+    end
   end
 
   context 'when it has not been filled out' do
