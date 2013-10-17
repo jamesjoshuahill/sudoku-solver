@@ -1,6 +1,7 @@
 require 'cell'
 
 class Grid
+
   attr_reader :cells
 
   def initialize(puzzle)
@@ -127,4 +128,5 @@ class Grid
     end
     grid_as_string
   end
+
 end

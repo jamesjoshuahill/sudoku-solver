@@ -1,4 +1,5 @@
 class Cell
+
   attr_reader :value, :neighbours
 
   def initialize(value)
@@ -32,4 +33,5 @@ class Cell
       @value = possible_values.first if possible_values.count == 1
     end
   end
+
 end

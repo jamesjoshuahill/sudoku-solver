@@ -1,10 +1,12 @@
 require 'cell'
 
 describe Cell do
+
   let(:cell) { Cell.new(0) }
 
   it 'should have a value' do
     expect(cell.value).to eq 0
+
     cell = Cell.new(1)
     expect(cell.value).to eq 1
   end
@@ -24,6 +26,7 @@ describe Cell do
   end
 
   context 'can have neighbours and' do
+
     it 'should start with none' do
       cell = Cell.new(0)
       expect(cell.neighbours).to be_empty
@@ -47,9 +50,11 @@ describe Cell do
       cell.add_neighbours(neighbours)
       expect(cell.values_of_neighbours).to eq [1, 5, 10]
     end
+
   end
 
   context 'when it has not been filled out' do
+
     it 'should know which values are possible' do
       expect(cell).to receive(:values_of_neighbours).and_return [1, 2, 3, 4]
       expect(cell.possible_values).to eq [5, 6, 7, 8, 9]
@@ -74,14 +79,18 @@ describe Cell do
       cell.solve
       expect(cell).not_to be_filled_out
     end
+
   end
 
   context 'when it has been filled out' do
+
     it 'should not solve itself' do
       cell = Cell.new(5)
       cell.add_neighbours([1, 2, 3, 4, 5, 6, 7, 8])
       cell.solve
       expect(cell.value).to eq 5
     end
+
   end
+
 end

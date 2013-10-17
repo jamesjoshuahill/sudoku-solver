@@ -1,6 +1,7 @@
 require 'grid'
 
 describe Grid do
+
   let(:puzzle) { '015003002000100906270068430490002017501040380003905000900081040860070025037204600' }
   let(:grid) { Grid.new(puzzle) }
   let(:hard_puzzle) { (1..9).to_a.sample(9).join + ('0' * 72) }
@@ -29,19 +30,19 @@ describe Grid do
     puts grid.inspect
   end
 
-  # Integration test relying on Cell!
+  # Integration test relying on Cell
   it 'should tell a row of cells they are neighbours' do
     grid.make_neighbours_in_row(0)
     expect(grid.cells[0][0].neighbours.count).to eq 8
   end
 
-  # Integration test relying on Cell!
+  # Integration test relying on Cell
   it 'should tell a column of cells they are neighbours' do
     grid.make_neighbours_in_column(0)
     expect(grid.cells[0][0].neighbours.count).to eq 8
   end
 
-  # Integration test relying on Cell!
+  # Integration test relying on Cell
   it 'should tell a box of cells they are neighbours' do
     grid.make_neighbours_in_box(0)
     expect(grid.cells[0][0].neighbours.count).to eq 8
@@ -50,7 +51,7 @@ describe Grid do
     expect(grid.cells[4][4].neighbours.count).to eq 8
   end
 
-  it 'should tell every cell in the grid it\'s neighbours' do
+  it "should tell every cell in the grid it's neighbours" do
     grid.make_all_neighbours
     expect(grid.cells[0][0].neighbours.count).to eq 20
     expect(grid.cells[4][4].neighbours.count).to eq 20
@@ -90,4 +91,5 @@ describe Grid do
     hard_grid.solve
     expect(hard_grid).to be_solved
   end
+
 end
